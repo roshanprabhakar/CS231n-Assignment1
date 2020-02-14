@@ -1,39 +1,35 @@
+import random
+
 from ComputationalGraphs import Commands
+from ComputationalGraphs.Commands import Multiplication
 
 
 class ComputationalGraph:
+    connections = 2
 
-    def __init__(self):
+    def __init__(self, layers):
+        self.final = Node()
+        self.graph(self.final, layers)
 
-        # lat layer, 1 neuron
-        n2p0 = Node()
+    def simple_graph(self, node):
+        for i in range(self.connections):
+            node.add_value_channel(random.randint(0, 5))
 
-        # second last layer, 2 neuron
-        n1p0 = Node()
-        n1p1 = Node()
-
-        # input layer
-        n0p0 = 4
-        n0p1 = 5
-        n0p2 = 3
-        n0p3 = 7
-
-        n2p0.add_input_channel(n1p0)
-        n2p0.add_input_channel(n1p1)
-
-        n1p0.add_input_value(n0p0)
-        n1p0.add_input_value(n0p1)
-
-        n1p1.add_input_value(n0p2)
-        n1p1.add_input_value(n0p3)
-
-        print(n2p0.compute_output())
+    def graph(self, node, layers):
+        if layers == 2:
+            self.simple_graph(node)
+        else:
+            for i in range(self.connections):
+                new_node = Node()
+                self.graph(new_node, layers - 1)
+                node.add_input_channel(new_node)
 
 
 class Node:
 
-    def __init__(self, computation="multiply"):
+    def __init__(self, computation="add"):
         self.input = []
+        self.computation = computation
         self.computer = Utils.commands[computation]
 
     # one of two content modifiers
@@ -41,23 +37,28 @@ class Node:
         self.input.append(node)
 
     # one of two content modifiers
-    def add_input_value(self, value):
+    def add_value_channel(self, value):
         self.input.append(value)
 
     def compute_output(self):
 
-        if type(self.input[0]) is int:
-            return self.computer.compute(self.input)
-        else:
+        if type(self.input[0]) is not int:
             feed_forward = []
             for node in self.input:
-                feed_forward.append(node.computeOutput())
+                feed_forward.append(node.compute_output())
 
+            return self.computer.compute(feed_forward)
+        else:
+            print(self.input)
             return self.computer.compute(self.input)
+
+    def __str__(self):
+        return self.computation
 
 
 class Utils:
     commands = {"multiply": Commands.Multiplication, "add": Commands.Addition}
 
 
-graph = ComputationalGraph()
+graph = ComputationalGraph(4)
+print(graph.final.compute_output())
