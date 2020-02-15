@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3ba2254c-9f7c-4b04-bb86-96de42802258" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ComputationalGraphs/Commands.py" beforeDir="false" afterPath="$PROJECT_DIR$/ComputationalGraphs/Commands.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ComputationalGraphs/ComputationalGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/ComputationalGraphs/ComputationalGraph.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -150,8 +148,16 @@
       <workItem from="1581108459751" duration="11292000" />
       <workItem from="1581469239631" duration="4988000" />
       <workItem from="1581540342834" duration="1679000" />
-      <workItem from="1581658041403" duration="4986000" />
+      <workItem from="1581658041403" duration="9026000" />
     </task>
+    <task id="LOCAL-00001" summary="created recursive instantiation of not fully connected computational graphs">
+      <created>1581664894847</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1581664894847</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,5 +175,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="created recursive instantiation of not fully connected computational graphs" />
+    <option name="LAST_COMMIT_MESSAGE" value="created recursive instantiation of not fully connected computational graphs" />
   </component>
 </project>
