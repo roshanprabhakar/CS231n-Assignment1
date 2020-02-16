@@ -54,15 +54,11 @@ class ComputationalGraph:
     # layer from 1 to l
     def get_node(self, layer, neuron):
         path = self.get_path(layer - 1, neuron)
-        print(path)
-        # node = self.final
-        # for turn in list(path):
-        #     node = self.turn(node, turn)
-        # return node
-
-    def turn(self, node, direction):
-        return node.input[direction]
-
+        node = self.final
+        for turn in list(path):
+            node = node.input[int(turn)]
+        assert type(node) == Node
+        return node
 
     def get_path(self, layer, neuron):
         compressed_path = Utils.from_decimal(self.connections, neuron)
@@ -117,7 +113,10 @@ class Node:
 
 
 class Utils:
+
     commands = {"multiply": Commands.Multiplication, "add": Commands.Addition}
+
+    # base conversion taken from GeeksForGeeks
 
     @staticmethod
     # Function to convert a given decimal
@@ -171,4 +170,5 @@ class Utils:
 
 graph = ComputationalGraph(3, [0, 1, 2, 3, 4, 5, 6, 7, 8], 3)
 print(ComputationalGraph.compress_graph(graph.final))
-graph.get_node(3, 7) # only finds path currently, doesn't return memory reference
+node = graph.get_node(2, 2) # only finds path currently, doesn't return memory reference
+print(ComputationalGraph.compress_graph(node))
