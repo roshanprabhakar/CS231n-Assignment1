@@ -51,14 +51,23 @@ class ComputationalGraph:
     # fill the missing decimal places with zeros
 
     # neuron from 0 to n - 1
-    # layer from 1 to l
+    # layer from 0 to l - 1
     def get_node(self, layer, neuron):
-        path = self.get_path(layer - 1, neuron)
+        path = self.get_path(layer, neuron)
         node = self.final
         for turn in list(path):
             node = node.input[int(turn)]
         assert type(node) == Node
         return node
+
+    def derivate(self, layer, neuron):
+        path = self.get_path(layer, neuron)
+        derivative = 1
+        node = self.final
+        for turn in list(path):
+            derivative *= node.computer.find_derivative(node.compute_uoutput(), int(turn))
+            node = node.input[int(turn)]
+        return derivative
 
     def get_path(self, layer, neuron):
         compressed_path = Utils.from_decimal(self.connections, neuron)
@@ -79,7 +88,7 @@ class ComputationalGraph:
 
 class Node:
 
-    def __init__(self, computation="add"):
+    def __init__(self, computation="multiply"):
         self.input = []
         self.computation = computation
         self.computer = Utils.commands[computation]
@@ -102,6 +111,16 @@ class Node:
             return self.computer.compute(feed_forward)
         else:
             return self.computer.compute(self.input)
+
+    def compute_uoutput(self):
+
+        if type(self.input[0]) is int:
+            return self.input
+
+        out = []
+        for node in self.input:
+            out.append(node.compute_output())
+        return out
 
     def is_simple(self):
         if type(self.input[0]) is int:
@@ -144,9 +163,9 @@ class Utils:
     def re_val(num):
 
         if 0 <= num <= 9:
-            return chr(num + ord('0'));
+            return chr(num + ord('0'))
         else:
-            return chr(num - 10 + ord('A'));
+            return chr(num - 10 + ord('A'))
 
             # Utility function to reverse a string
 
@@ -159,16 +178,7 @@ class Utils:
             str[len - i - 1] = temp
 
 
-# # direct representation using linked nodes
-# graph = ComputationalGraph(3, [0, 1, 2, 3, 4, 5, 6, 7, 8], 3)
-# # indirect representation using list structure
-# compressed_graph = ComputationalGraph.compress_graph(graph.final)
-#
-# print(compressed_graph)
-# print(graph.final.compute_output())
-
-
-graph = ComputationalGraph(3, [0, 1, 2, 3, 4, 5, 6, 7, 8], 3)
+graph = ComputationalGraph(3, [1, 1, 2, 3, 4, 5, 6, 7, 8], 3)
 print(ComputationalGraph.compress_graph(graph.final))
-node = graph.get_node(2, 2) # only finds path currently, doesn't return memory reference
+node = graph.get_node(1, 2)
 print(ComputationalGraph.compress_graph(node))
